@@ -12,11 +12,24 @@ Android counterpart:
 
 ## What it does
 
-- `PilotSampleApp` → `ContentView` renders a SwiftUI list of events
-  fetched via `client.events.list(...)`.
+Tab 1 — **Swift**: hand-rolled SwiftUI `List` of events fetched via
+`client.events.list(...)`. Demonstrates direct SDK consumption from
+Swift code.
+
+Tab 2 — **Compose**: the full Compose Multiplatform UI
+(`EventListWithFilters` + sticky filter bar + sort dropdown +
+pull-to-refresh + image loading) rendered inside SwiftUI via a
+`UIViewControllerRepresentable` bridge. Same components that ship to
+Android, running natively on iOS.
+
+Together they validate both integration styles:
+- `PilotSampleApp` → `ContentView` hosts a `TabView` with both.
 - `EventsViewModel` (`@MainActor`, `ObservableObject`) catches typed
   `PartnerException.NotFound` / `RateLimited` / `Network` cases in
   Swift `catch` clauses — proves the typed-exception bridge works.
+- `ComposeEventsScreen` (`UIViewControllerRepresentable`) wraps
+  `PilotPartnerUi.shared.eventsScreen(client:)`, the Kotlin
+  `ComposeUIViewController` factory shipped from the library.
 - `PartnerClientHolder` wires the SDK builder with the right
   Swift-bridged enum names (`Ktor_client_loggingLogLevel.info`,
   `PartnerEnvironment.sandbox`).
@@ -99,18 +112,11 @@ yours lives elsewhere:
 PILOT_KOTLIN_DIR=/path/to/pilot-kotlin ./scripts/build-xcframework.sh
 ```
 
-## What's intentionally NOT here yet
+## What's intentionally NOT here
 
-- **`PilotPartnerUi.framework`** — the Compose Multiplatform UI library
-  is built and links cleanly (verified via
-  `:pilot-partner-ui:linkDebugFrameworkIosSimulatorArm64`) but isn't yet
-  embedded in this sample. The SDK alone is enough to prove the
-  network + types bridge into Swift. Wiring Compose into a SwiftUI app
-  is a follow-up — Compose Multiplatform exposes a
-  `UIViewController`-shaped entrypoint, but integration patterns vary
-  (full-screen vs. embedded vs. mixed). File an issue when you need it.
-- **A built XCFramework binary in the repo.** It's 39M and produced from
-  source; `scripts/build-xcframework.sh` rebuilds it on demand.
+- **Built XCFramework binaries in the repo.** They're ~40M each and
+  produced from source; `scripts/build-xcframework.sh` rebuilds them on
+  demand from a sibling `pilot-kotlin` checkout.
 
 ## Layout
 
@@ -121,15 +127,17 @@ PILOT_KOTLIN_DIR=/path/to/pilot-kotlin ./scripts/build-xcframework.sh
 │   │   ├── project.pbxproj
 │   │   └── xcshareddata/xcschemes/iosApp.xcscheme
 │   └── iosApp/
-│       ├── PilotSampleApp.swift     # @main App
-│       ├── ContentView.swift         # SwiftUI list + AsyncImage
-│       ├── EventsViewModel.swift     # @MainActor ObservableObject
-│       ├── PartnerClientHolder.swift # SDK builder wiring
-│       ├── Secrets.swift             # env / Info.plist secret resolution
+│       ├── PilotSampleApp.swift         # @main App
+│       ├── ContentView.swift             # TabView: Swift list + Compose embed
+│       ├── ComposeEventsScreen.swift     # UIViewControllerRepresentable for CMP
+│       ├── EventsViewModel.swift         # @MainActor ObservableObject (Swift tab)
+│       ├── PartnerClientHolder.swift     # SDK builder wiring
+│       ├── Secrets.swift                 # env / Info.plist secret resolution
 │       ├── Assets.xcassets/
 │       └── Preview Content/
-├── Frameworks/                       # populated by build-xcframework.sh, gitignored
-│   └── PilotPartnerSdk.xcframework
+├── Frameworks/                           # populated by build-xcframework.sh, gitignored
+│   ├── PilotPartnerSdk.xcframework
+│   └── PilotPartnerUi.xcframework
 └── scripts/
-    └── build-xcframework.sh          # one-shot bridge to ../pilot-kotlin's gradle
+    └── build-xcframework.sh              # builds both XCFrameworks from ../pilot-kotlin
 ```

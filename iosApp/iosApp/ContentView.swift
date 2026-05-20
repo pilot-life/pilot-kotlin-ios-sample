@@ -1,13 +1,38 @@
 import SwiftUI
 import PilotPartnerSdk
 
+/// Root with a two-tab view: pure SwiftUI consumer of the SDK on the
+/// left, full Compose Multiplatform UI on the right. Side-by-side
+/// validates that partners can choose either integration style.
 struct ContentView: View {
+    var body: some View {
+        TabView {
+            SwiftEventsTab()
+                .tabItem {
+                    Label("Swift", systemImage: "swift")
+                }
+
+            NavigationView {
+                ComposeEventsScreen(client: PartnerClientHolder.shared)
+                    .ignoresSafeArea(edges: .bottom)
+                    .navigationTitle("Events (Compose)")
+                    .navigationBarTitleDisplayMode(.inline)
+            }
+            .tabItem {
+                Label("Compose", systemImage: "rectangle.3.group")
+            }
+        }
+    }
+}
+
+/// Native SwiftUI implementation — same SDK, hand-rolled UI in Swift.
+private struct SwiftEventsTab: View {
     @StateObject private var vm = EventsViewModel()
 
     var body: some View {
         NavigationView {
             content
-                .navigationTitle("Events")
+                .navigationTitle("Events (Swift)")
                 .toolbar {
                     ToolbarItem(placement: .navigationBarTrailing) {
                         Button {

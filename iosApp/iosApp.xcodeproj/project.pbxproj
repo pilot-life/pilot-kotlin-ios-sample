@@ -16,6 +16,9 @@
 		AA0100172E0A000000000001 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AA0100162E0A000000000001 /* Preview Assets.xcassets */; };
 		AA0100192E0A000000000001 /* PilotPartnerSdk.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA0100182E0A000000000001 /* PilotPartnerSdk.xcframework */; };
 		AA01001A2E0A000000000001 /* PilotPartnerSdk.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = AA0100182E0A000000000001 /* PilotPartnerSdk.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		AA0100242E0A000000000001 /* ComposeEventsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA0100252E0A000000000001 /* ComposeEventsScreen.swift */; };
+		AA0100262E0A000000000001 /* PilotPartnerUi.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = AA0100272E0A000000000001 /* PilotPartnerUi.xcframework */; };
+		AA0100282E0A000000000001 /* PilotPartnerUi.xcframework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = AA0100272E0A000000000001 /* PilotPartnerUi.xcframework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -26,6 +29,7 @@
 			dstSubfolderSpec = 10;
 			files = (
 				AA01001A2E0A000000000001 /* PilotPartnerSdk.xcframework in Embed Frameworks */,
+				AA0100282E0A000000000001 /* PilotPartnerUi.xcframework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -42,6 +46,8 @@
 		AA0100142E0A000000000001 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AA0100162E0A000000000001 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		AA0100182E0A000000000001 /* PilotPartnerSdk.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = PilotPartnerSdk.xcframework; path = ../Frameworks/PilotPartnerSdk.xcframework; sourceTree = "<group>"; };
+		AA0100252E0A000000000001 /* ComposeEventsScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComposeEventsScreen.swift; sourceTree = "<group>"; };
+		AA0100272E0A000000000001 /* PilotPartnerUi.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = PilotPartnerUi.xcframework; path = ../Frameworks/PilotPartnerUi.xcframework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -50,6 +56,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AA0100192E0A000000000001 /* PilotPartnerSdk.xcframework in Frameworks */,
+				AA0100262E0A000000000001 /* PilotPartnerUi.xcframework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -70,6 +77,7 @@
 			children = (
 				AA01000A2E0A000000000001 /* PilotSampleApp.swift */,
 				AA01000C2E0A000000000001 /* ContentView.swift */,
+				AA0100252E0A000000000001 /* ComposeEventsScreen.swift */,
 				AA01000E2E0A000000000001 /* EventsViewModel.swift */,
 				AA0100102E0A000000000001 /* PartnerClientHolder.swift */,
 				AA0100122E0A000000000001 /* Secrets.swift */,
@@ -83,6 +91,7 @@
 			isa = PBXGroup;
 			children = (
 				AA0100182E0A000000000001 /* PilotPartnerSdk.xcframework */,
+				AA0100272E0A000000000001 /* PilotPartnerUi.xcframework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -176,6 +185,7 @@
 			files = (
 				AA01000B2E0A000000000001 /* PilotSampleApp.swift in Sources */,
 				AA01000D2E0A000000000001 /* ContentView.swift in Sources */,
+				AA0100242E0A000000000001 /* ComposeEventsScreen.swift in Sources */,
 				AA01000F2E0A000000000001 /* EventsViewModel.swift in Sources */,
 				AA0100112E0A000000000001 /* PartnerClientHolder.swift in Sources */,
 				AA0100132E0A000000000001 /* Secrets.swift in Sources */,
