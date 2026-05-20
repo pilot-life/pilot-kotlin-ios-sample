@@ -13,7 +13,7 @@ struct ContentView: View {
                 }
 
             NavigationView {
-                ComposeEventsScreen(client: PartnerClientHolder.shared)
+                ComposeEventsScreen()
                     .ignoresSafeArea(edges: .bottom)
                     .navigationTitle("Events (Compose)")
                     .navigationBarTitleDisplayMode(.inline)

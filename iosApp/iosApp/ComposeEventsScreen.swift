@@ -1,27 +1,28 @@
 import SwiftUI
 import UIKit
-import PilotPartnerSdk
 import PilotPartnerUi
 
 /// Wraps the Compose Multiplatform `UIViewController` returned by
 /// `PilotPartnerUi.shared.eventsScreen(...)` in a SwiftUI view via
 /// `UIViewControllerRepresentable`.
 ///
-/// This is the canonical Compose-Multiplatform-into-SwiftUI bridge.
-/// The `UIViewController` returned by `ComposeUIViewController { ... }`
-/// hosts the entire Compose runtime — gesture, layout, accessibility,
-/// state all routed through it.
-///
-/// The shipped iOS entry point in `pilot-partner-ui` renders
-/// `EventListWithFilters` with the default `EventsViewModel` wired to
-/// the provided `PilotPartnerClient`. Partners who need their own VM
-/// or different composition can copy the iOS entry point's source
-/// (~30 LOC) and substitute.
+/// The factory takes config primitives rather than a `PilotPartnerClient`.
+/// Kotlin/Native builds each KMP library as a self-contained framework
+/// and types from one don't auto-bridge into another — so passing a
+/// shared SDK-typed client across the framework boundary would force a
+/// Swift cast between two distinct types that happen to wrap the same
+/// Kotlin class. Taking primitives sidesteps the issue and gives partners
+/// a simpler "you only need this much to render" API.
 struct ComposeEventsScreen: UIViewControllerRepresentable {
-    let client: PilotPartnerClient
 
     func makeUIViewController(context: Context) -> UIViewController {
-        PilotPartnerUi.shared.eventsScreen(client: client)
+        PilotPartnerUi.shared.eventsScreen(
+            apiKey: Secrets.apiKey,
+            organizationUuid: Secrets.organizationUuid,
+            environment: Secrets.environment,
+            baseUrl: Secrets.baseUrl,
+            gatewaySecret: Secrets.gatewaySecret,
+        )
     }
 
     func updateUIViewController(_ controller: UIViewController, context: Context) {
