@@ -1,0 +1,16 @@
+# Xcode
+build/
+DerivedData/
+*.xcuserdatad/
+xcuserdata/
+xcuserstate
+
+# Local agent state
+.claude/
+
+# The XCFramework is built from sources, not committed.
+# scripts/build-xcframework.sh fetches/builds it on demand.
+Frameworks/
+
+# macOS
+.DS_Store
